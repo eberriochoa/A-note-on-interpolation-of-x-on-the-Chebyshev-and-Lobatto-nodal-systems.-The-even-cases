@@ -1,0 +1,86 @@
+(* This file is related with the piece of work:
+
+"A note on Lagrange interpolation  of |x| on the Chebyshev and \
+Chebyshev-Lobatto nodal systems. The even cases "
+
+This sequence of Mathematica commands obtain a view  of the \
+interpolation process of  the jump function;
+*  on the nodal system constituted by the 2n-th roots of 1, n odd.
+
+ *  and on the nodal system constituted by the 2n-th roots of -1, n \
+even.
+
+We use a similar notation as in the piece of work. interpolador[z_] \
+is used here instead L_{-n,n-1}(F,z), we use the baricentric \
+expression (3) for it.
+
+The  plot obtain Figure 6 (Up) presented in section 4 *)
+
+
+
+Clear[F, n]
+
+F[z_] = Piecewise[{{1, Re[z] >= 0}, {-1, Re[z] < 0}}];
+
+n = 200;
+
+arcosalpha = Table[N[(k + 1/2) 2 Pi /(2 n)], {k, 0, 2 n - 1}];
+arcosalphamitadnmenos1 = 
+  N[( 2 n/2 - 1) arcosalpha - 
+    2 Pi * IntegerPart[(2 n/2 - 1) arcosalpha/(2 Pi)]];
+
+alphas = N[E^(I arcosalpha), 50];
+alphasmitadnmenos1 = N[E^(I arcosalphamitadnmenos1), 50];
+
+
+wj = (alphasmitadnmenos1)^(-1);
+
+valoresfalpha = Table[F[alphas[[k]]], {k, 1, 2 n}]; 
+
+interpolador[z_] = N[\!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(k = 1\), \(2  n\)]\((
+\*FractionBox[\(wj[\([\)\(k\)\(]\)] valoresfalpha[\([\)\(k\)\(]\)]\), \
+\(z - alphas[\([\)\(k\)\(]\)]\)])\)\)/\!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(k = 1\), \(2  n\)]\((
+\*FractionBox[\(\(\ \)\(wj[\([\)\(k\)\(]\)]\)\), \(z - 
+       alphas[\([\)\(k\)\(]\)]\)])\)\), 50];
+n = 200;
+
+arcosalpha = Table[N[(k) 2 Pi /(2 n)], {k, 0, 2 n - 1}];
+arcosalphamitadnmenos1 = 
+  N[( 2 n/2 - 1) arcosalpha - 
+    2 Pi * IntegerPart[(2 n/2 - 1) arcosalpha/(2 Pi)]];
+
+
+
+alphas = N[E^(I arcosalpha), 50];
+alphasmitadnmenos1 = N[E^(I arcosalphamitadnmenos1), 50];
+
+
+wj = (alphasmitadnmenos1)^(-1);
+
+
+
+valoresfalpha = Table[F[alphas[[k]]], {k, 1, 2 n}];
+
+
+
+interpolador0[z_] = N[\!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(k = 1\), \(2  n\)]\((
+\*FractionBox[\(wj[\([\)\(k\)\(]\)] valoresfalpha[\([\)\(k\)\(]\)]\), \
+\(z - alphas[\([\)\(k\)\(]\)]\)])\)\)/\!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(k = 1\), \(2  n\)]\((
+\*FractionBox[\(\(\ \)\(wj[\([\)\(k\)\(]\)]\)\), \(z - 
+       alphas[\([\)\(k\)\(]\)]\)])\)\), 50];
+
+
+
+
+
+
+Figure6 = 
+ Plot[{F[E^(I (x))], Re[interpolador[E^(I (x))]], 
+   Re[interpolador0[E^(I (x))]]}, {x, Pi/2 - 6 2 Pi/(2 n), 
+   Pi/2 + 6 2 Pi/(2 n)}, PlotRange -> Full, PlotPoints -> 800, 
+  PlotStyle -> {{Red, .01}, {Black, .01}, {Blue, .01}}, 
+  AspectRatio -> 9/16]
