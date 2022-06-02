@@ -1,0 +1,5 @@
+error[d_] = 4 Cos[Pi d] (d HurwitzLerchPhi[-1, 1, 1/2 + d] - 1/2 )
+
+Table[d /. FindRoot[error'[d], {d, k + .25}], {k, 1, 5}]
+
+error[%]
