@@ -1,4 +1,4 @@
-# A-note-on-interpolation-of-x-on-the-Chebyshev-and-Lobatto-nodal-systems.-The-even-cases
+# A-note-on-interpolation-of-absolute-value.-The-even-cases
 
 This file is related with the piece of work :
   
